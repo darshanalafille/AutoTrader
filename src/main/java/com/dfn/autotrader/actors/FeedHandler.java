@@ -3,7 +3,9 @@ package com.dfn.autotrader.actors;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import com.dfn.autotrader.entity.Symbol;
+import com.dfn.autotrader.entity.price.PriceEvent;
 import com.dfn.autotrader.entity.price.SymbolList;
+import com.dfn.autotrader.store.PriceStore;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -46,6 +48,29 @@ public class FeedHandler extends UntypedActor {
             list.getSymbolList().forEach(s -> {
                 SymbolStore.put(new Symbol(s.getSymbolCode()));
             });
+        }else if(messageType.equals("V") || messageType.equals("8")){
+
+            String symbol = object.get("symbol").getAsString();
+            PriceEvent event = PriceStore.getLastPriceEvent(symbol);
+            if(event == null)
+                event = new PriceEvent();
+
+            if(messageType.equals("V")){
+                double askVol = object.get("sellSide").getAsDouble();
+                event.setAskVol(askVol);
+                double bidVol = object.get("buySide").getAsDouble();
+                event.setBidVol(bidVol);
+                double ltp = object.get("lastTradePrice").getAsDouble();
+                event.setLastTradePrice(ltp);
+            }else if(messageType.equals("8")){
+                double qty = object.get("qty").getAsDouble();
+                event.setLastTradeQty(qty);
+                double price = object.get("price").getAsDouble();
+                event.setLastTradePrice(price);
+            }
+
+            PriceStore.addPriceEvent(symbol,event);
+
         }
     }
 

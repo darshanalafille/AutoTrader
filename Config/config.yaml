@@ -1,0 +1,17 @@
+
+method : random
+
+random :
+  noOfAgents : 100
+  delayInSec : 1
+
+up :
+  symbol : 1010
+  start : 100
+  end : 150
+
+down :
+  symbol : 1080
+  start : 150
+  end : 100
+

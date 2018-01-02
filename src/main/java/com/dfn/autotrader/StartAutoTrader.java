@@ -15,9 +15,14 @@ public class StartAutoTrader {
     private static final Logger logger = LogManager.getLogger(StartAutoTrader.class);
 
     public static void main(String[] args) {
-        FixSession fixSession = FixSession.getFixSession();
+
+        args = new String[]{"random"};
+        String command = args[0];
         ActorSystem system = ActorSystem.create("broker");
-        system.actorOf(Props.create(SupervisorActor.class),"systemSupervisor");
+        FixSession fixSession = FixSession.getFixSession();
+        system.actorOf(Props.create(SupervisorActor.class,command),"systemSupervisor");
+
+
     }
 
 }

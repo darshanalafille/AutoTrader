@@ -18,17 +18,30 @@ public class SupervisorActor extends UntypedActor {
 
     Cancellable cancellable = null;
     private boolean isTrading = false;
+    private String command;
+
+    public SupervisorActor(String command){
+        this.command = command;
+    }
 
     @Override
     public void preStart() throws Exception {
         super.preStart();
-        Config.getTraderList2().forEach((trader) -> {
-            ActorRegistry.put(trader.getPortfolio().getAccountNo(), getContext().actorOf(Props.create(TraderActor.class, trader),
-                    trader.getPortfolio().getAccountNo()));
-        });
-        ActorRef feed = getContext().actorOf(Props.create(FeedHandler.class),"feedHandler");
-        cancellable = getContext().system().scheduler().scheduleOnce(Duration.create(5, TimeUnit.SECONDS),
-                getSelf(),new WakeUp(),getContext().dispatcher(),null);
+        if(command.equals("random")){
+            Config.getTraderList2().forEach((trader) -> {
+                ActorRegistry.put(trader.getPortfolio().getAccountNo(), getContext().actorOf(Props.create(TraderActor.class, trader),
+                        trader.getPortfolio().getAccountNo()));
+            });
+            ActorRef feed = getContext().actorOf(Props.create(FeedHandler.class),"feedHandler");
+            cancellable = getContext().system().scheduler().scheduleOnce(Duration.create(5, TimeUnit.SECONDS),
+                    getSelf(),new WakeUp(),getContext().dispatcher(),null);
+        }else if(command.equals("up")){
+            ActorRef ref = getContext().actorOf(Props.create(UpTreandsMaker.class,"1080"),"UpTreandsMaker");
+            ActorRef feed = getContext().actorOf(Props.create(FeedHandler.class),"feedHandler");
+        }else if(command.equals("down")){
+            ActorRef ref = getContext().actorOf(Props.create(DownTreandsMaker.class,"1080"),"DownTreandsMaker");
+            ActorRef feed = getContext().actorOf(Props.create(FeedHandler.class),"feedHandler");
+        }
     }
 
     @Override

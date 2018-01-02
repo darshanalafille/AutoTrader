@@ -34,7 +34,6 @@ public class TraderActor extends UntypedActor{
     public void preStart() throws Exception {
         super.preStart();
         System.out.println("Trader " + trader.getPortfolio().getAccountNo() + " has been created.");
-
     }
 
     public TraderActor(Trader trader){
@@ -106,7 +105,8 @@ public class TraderActor extends UntypedActor{
         if(symList == null){
             symList = SymbolStore.getSymbolList();
         }
-        int index = random.nextInt(11);
+        int index = random.nextInt(35);
+        //int index = random.nextInt(3);
         if(index < symList.size()){
             return symList.get(index);
         }else {

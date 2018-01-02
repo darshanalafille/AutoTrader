@@ -79,7 +79,7 @@ public class Config {
         Random random = new Random();
         Trader trader = null;
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 250; i++){
 
             trader = new Trader();
             PortfolioEntry [] arrTrader3 = new PortfolioEntry[]{
@@ -96,7 +96,7 @@ public class Config {
             if(x == 0)
                 x = 1;
 
-            trader.setDelayInSec(3);
+            trader.setDelayInSec(1);
             trader.setTraderId(Integer.toString(i));
             list.add(trader);
 
