@@ -1,5 +1,6 @@
 package com.dfn.autotrader.fix;
 
+import com.dfn.autotrader.store.AdminStore;
 import quickfix.*;
 import quickfix.fix42.ExecutionReport;
 import quickfix.fix42.Heartbeat;
@@ -15,7 +16,8 @@ public class TradeAppInitiator extends MessageCracker implements Application {
 
 
     public void onLogon(SessionID sessionID) {
-
+        System.out.println("Login Successfull");
+        AdminStore.setLogin();
     }
 
 
@@ -50,12 +52,12 @@ public class TradeAppInitiator extends MessageCracker implements Application {
 
 
     public void fromApp(Message message, SessionID sessionID) throws FieldNotFound, IncorrectDataFormat, IncorrectTagValue, UnsupportedMessageType {
-        //System.out.println("Application Response Received (Initiator) :" +  message.toString());
+        System.out.println("Application Response Received (Initiator) :" +  message.toString());
         crack(message,sessionID);
     }
 
     public void onMessage(ExecutionReport executionReport,SessionID sessionID) throws FieldNotFound, UnsupportedMessageType, IncorrectTagValue{
-
+        System.out.println("Execution Report Recieved :" +  executionReport);
     }
 
 }

@@ -102,16 +102,17 @@ public class TraderActor extends UntypedActor{
     }
 
     private String pickSymbol(){
-        if(symList == null){
-            symList = SymbolStore.getSymbolList();
-        }
-        int index = random.nextInt(35);
-        //int index = random.nextInt(3);
-        if(index < symList.size()){
-            return symList.get(index);
-        }else {
-            return symList.get(0);
-        }
+//        if(symList == null){
+//            symList = SymbolStore.getSymbolList();
+//        }
+//        int index = random.nextInt(35);
+//        //int index = random.nextInt(3);
+//        if(index < symList.size()){
+//            return symList.get(index);
+//        }else {
+//            return symList.get(0);
+//        }
+        return "1010";
     }
 
 

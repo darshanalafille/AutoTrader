@@ -23,7 +23,7 @@ public class FixSession {
             SessionSettings sessionSettings = new SessionSettings("./initiatorSettings.txt");
             Application initiatorApplication = new TradeAppInitiator();
             FileStoreFactory fileStoreFactory = new FileStoreFactory(sessionSettings);
-            FileLogFactory fileLogFactory = new FileLogFactory(sessionSettings);
+            LogFactory fileLogFactory = new ScreenLogFactory(sessionSettings);
             MessageFactory messageFactory = new DefaultMessageFactory();
             socketInitiator = new SocketInitiator(initiatorApplication,fileStoreFactory,sessionSettings,fileLogFactory,
                     messageFactory);
